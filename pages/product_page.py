@@ -19,3 +19,14 @@ class ProductPage(BasePage):
     def should_disappear_success_message(self):
         assert self.is_disappeared(*ProductPageLocators.ALERT_ITEM_ADDED), \
             "Success message is presented, but should not be"
+
+    def should_be_success_added_item_msg(self):
+        success_alert_text = self.get_attribute_of_elem(*ProductPageLocators.ALERT_ITEM_ADDED, "innerText")
+        item_name = self.get_attribute_of_elem(*ProductPageLocators.ITEM_NAME, "textContent")
+        assert f'{item_name} has been added to your basket' in success_alert_text, "Wrong book name in alert"
+
+    def should_be_correct_price_msg(self):
+        basket_info_alert_text = self.get_attribute_of_elem(*ProductPageLocators.ALERT_ABOUT_BASKET_SUM,
+                                                                    "innerText")
+        item_price = self.get_attribute_of_elem(*ProductPageLocators.ITEM_PRICE, "textContent")
+        assert f'Your basket total is now {item_price}' in basket_info_alert_text, "Wrong price in alert"
